@@ -302,34 +302,88 @@ function sendMessage() {
   chatBox.scrollTop = chatBox.scrollHeight;
 
   // FAKE DELAY (simulate thinking)
-  setTimeout(() => {
+  // REAL BACKEND CALL
+
+fetch("http://127.0.0.1:8000/predict", {
+
+  method: "POST",
+
+  headers: {
+    "Content-Type": "application/json"
+  },
+
+  body: JSON.stringify({
+
+    message: message,
+
+    severity: {},
+
+    context: window.chatContext || {}
+
+  })
+
+})
+
+.then(res => res.json())
+
+.then(data => {
+
   typingDiv.remove();
 
   const botMsg = document.createElement("div");
+
   botMsg.classList.add("message", "bot");
 
-  const mode = document.getElementById("modeSelect").value;
-  const query = message.toLowerCase();
+  // FOLLOW UP QUESTION
+  if (data.type === "follow_up") {
 
-  if (mode === "disease" && knowledgeBase[query]) {
-    const data = knowledgeBase[query];
+    botMsg.innerText = data.question;
 
-    botMsg.innerText =
-      "🌿 Disease: " + query.toUpperCase() + "\n\n" +
-      "🩺 Symptoms: " + data.symptoms + "\n\n" +
-      "🧘 Ayurvedic View: " + data.ayurveda + "\n\n" +
-      "🌿 Remedies: " + data.remedies + "\n\n" +
-      "🥗 Diet: " + data.diet;
-  } 
+    window.chatContext = data.context;
+
+  }
+
+  // FINAL RESPONSE
   else {
+
     botMsg.innerText =
-      "🌿 I'm still learning. Try selecting a known condition like diabetes or headache.";
+
+      "🌿 " + data.message +
+
+      "\n\n📊 Confidence: " + data.confidence + "%" +
+
+      "\n\n🌿 Remedies:\n" + data.remedies +
+
+      "\n\n🥗 Diet:\n" + data.diet +
+
+      "\n\n🧘 Lifestyle:\n" + data.lifestyle;
+
+    window.chatContext = {};
+
   }
 
   chatBox.appendChild(botMsg);
+
   chatBox.scrollTop = chatBox.scrollHeight;
 
-}, 1200);
+})
+
+.catch(error => {
+
+  typingDiv.remove();
+
+  const botMsg = document.createElement("div");
+
+  botMsg.classList.add("message", "bot");
+
+  botMsg.innerText =
+    "⚠️ Backend connection failed.";
+
+  chatBox.appendChild(botMsg);
+
+  console.error(error);
+
+});
 }
 function changeMode() {
   const mode = document.getElementById("modeSelect").value;

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ayurwell Chatbot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+   body {
+  margin: 0;
+  padding: 0;
+
+  height: 100vh;
+
+  overflow: hidden;
+
+  font-family: 'Poppins', sans-serif;
+
+  background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+}
+
+   .chat-container {
+  height: calc(100vh - 70px);
+
+  display: flex;
+  flex-direction: column;
+
+  background: #f9f9f9;
+}
+
+    .chat-box {
+  flex: 1;
+
+  overflow-y: auto;
+
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+}
+    .message {
+  padding: 10px 14px;
+  margin: 6px;
+  border-radius: 15px;
+  max-width: 70%;
+  font-size: 14px;
+}
+    @keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+    .user {
+  background: #dcedc8;
+  align-self: flex-end;
+}
+
+.bot {
+  background: #f1f8e9;
+  align-self: flex-start;
+}
+    
+
+.input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+/* Smooth transitions everywhere */
+* {
+  transition: all 0.2s ease-in-out;
+}
+
+.suggestions-box {
+  position: absolute;
+
+  bottom: 90px;
+
+  left: 20px;
+  right: 20px;
+
+  background: white;
+
+  border-radius: 18px;
+
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+
+  overflow: hidden;
+
+  z-index: 1000;
+}
+
+.suggestions-box.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.suggestion-item {
+  padding: 14px 18px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.suggestion-item:hover,
+.suggestion-item.active {
+  background: #e8f5e9;
+}
+
+.chat-header {
+  width: 100%;
+
+  margin: 0;
+
+  padding: 16px;
+
+  background: linear-gradient(45deg, #2e7d32, #66bb6a);
+
+  color: white;
+
+  font-size: 20px;
+  font-weight: 600;
+
+  text-align: center;
+
+  border-radius: 0;
+}
+
+select {
+  border: none;
+  background: transparent;
+
+  font-size: 14px;
+
+  color: #2e7d32;
+
+  cursor: pointer;
+
+  outline: none;
+
+  min-width: 180px;
+}
+select:hover {
+  border-color: #2e7d32;
+}
+
+
+.input-area {
+  padding: 18px;
+
+  background: white;
+
+  border-top: 1px solid #eee;
+}
+
+.chat-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: #f7f7f7;
+
+  border: 1px solid #ddd;
+
+  border-radius: 30px;
+
+  padding: 12px 16px;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+input {
+  flex: 1;
+
+  border: none;
+
+  background: transparent;
+
+  font-size: 20px;
+
+  outline: none;
+}
+input::placeholder {
+  font-size: 18px;
+  color: #888;
+}
+
+button {
+  background: linear-gradient(45deg, #2e7d32, #66bb6a);
+
+  color: white;
+
+  border: none;
+
+  border-radius: 50px;
+
+  padding: 10px 22px;
+
+  cursor: pointer;
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+input:focus {
+  border-color: #2e7d32;
+  box-shadow: 0 0 6px rgba(46,125,50,0.3);
+}
+
+/* typing animation */
+.typing {
+  font-size: 14px;
+  color: #555;
+  margin: 5px;
+}
+
+.typing span {
+  animation: blink 1.4s infinite;
+}
+
+.typing span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.typing span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0; }
+  40% { opacity: 1; }
+}
+
+  </style>
+</head>
+
+<body>
+<div class="chat-header">
+  🌿 AyurWell Assistant
+</div>
+<div class="chat-container">
+  <div class="chat-box" id="chatBox"></div>
+
+  <div class="input-area">
+
+  <div class="chat-controls">
+
+    <select id="modeSelect" onchange="changeMode()">
+      <option value="general">General</option>
+      <option value="disease">Learn about a disease</option>
+      <option value="remedy">Find a remedy</option>
+      <option value="lifestyle">Suggest Ayurvedic Lifestyle</option>
+    </select>
+
+    <input 
+  type="text" 
+  id="userInput" 
+  placeholder="What imbalance are you feeling?" 
+  oninput="showSuggestions()"
+/>
+
+    <button onclick="sendMessage()">➤</button>
+  </div>
+  <div id="suggestionsBox" class="suggestions-box"></div>
+</div>
+<script src="data.js"></script>
+<script>
+function sendMessage() {
+  const input = document.getElementById("userInput");
+  const message = input.value.trim();
+  const chatBox = document.getElementById("chatBox");
+
+  if (message === "") return;
+
+  // USER MESSAGE
+  const userMsg = document.createElement("div");
+  userMsg.classList.add("message", "user");
+  userMsg.innerText = message;
+  chatBox.appendChild(userMsg);
+
+  input.value = "";
+
+  // TYPING INDICATOR
+  const typingDiv = document.createElement("div");
+  typingDiv.classList.add("typing");
+  typingDiv.innerHTML = "Consulting Ayurvedic knowledge <span>.</span><span>.</span><span>.</span>";
+  chatBox.appendChild(typingDiv);
+
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  // FAKE DELAY (simulate thinking)
+  setTimeout(() => {
+  typingDiv.remove();
+
+  const botMsg = document.createElement("div");
+  botMsg.classList.add("message", "bot");
+
+  const mode = document.getElementById("modeSelect").value;
+  const query = message.toLowerCase();
+
+  if (mode === "disease" && knowledgeBase[query]) {
+    const data = knowledgeBase[query];
+
+    botMsg.innerText =
+      "🌿 Disease: " + query.toUpperCase() + "\n\n" +
+      "🩺 Symptoms: " + data.symptoms + "\n\n" +
+      "🧘 Ayurvedic View: " + data.ayurveda + "\n\n" +
+      "🌿 Remedies: " + data.remedies + "\n\n" +
+      "🥗 Diet: " + data.diet;
+  } 
+  else {
+    botMsg.innerText =
+      "🌿 I'm still learning. Try selecting a known condition like diabetes or headache.";
+  }
+
+  chatBox.appendChild(botMsg);
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+}, 1200);
+}
+function changeMode() {
+  const mode = document.getElementById("modeSelect").value;
+  const input = document.getElementById("userInput");
+
+  if (mode === "disease") {
+    input.placeholder = "Enter disease name...";
+  } 
+  else if (mode === "remedy") {
+    input.placeholder = "Enter problem for remedy...";
+  } 
+  else if(mode=="suggest ayurvedic lifestyle"){
+    input.placeholder = "What imbalance are you feeling?";
+  }
+  else {
+    input.placeholder = "Let's start your AyurWell journey";
+  }
+}
+
+// suggestions part 
+let currentIndex = -1;
+
+function showSuggestions() {
+  const input = document.getElementById("userInput").value.toLowerCase();
+  const mode = document.getElementById("modeSelect").value;
+  const box = document.getElementById("suggestionsBox");
+
+  box.innerHTML = "";
+  currentIndex = -1;
+
+  if (input === "") {
+    box.classList.remove("active");
+    return;
+  }
+
+  const suggestions = data[mode].filter(item =>
+    item.toLowerCase().includes(input)
+  );
+
+  if (suggestions.length === 0) {
+    box.classList.remove("active");
+    return;
+  }
+
+  suggestions.forEach((item, index) => {
+    const div = document.createElement("div");
+    div.classList.add("suggestion-item");
+    div.innerText = item;
+
+    div.onclick = () => {
+      selectSuggestion(item);
+    };
+
+    box.appendChild(div);
+  });
+
+  box.classList.add("active");
+}
+
+function selectSuggestion(value) {
+  document.getElementById("userInput").value = value;
+  document.getElementById("suggestionsBox").innerHTML = "";
+  document.getElementById("suggestionsBox").classList.remove("active");
+}
+
+document.getElementById("userInput").addEventListener("keydown", function(e) {
+  const items = document.querySelectorAll(".suggestion-item");
+
+  if (e.key === "ArrowDown") {
+    currentIndex++;
+    if (currentIndex >= items.length) currentIndex = 0;
+    updateActive(items);
+  }
+
+  else if (e.key === "ArrowUp") {
+    currentIndex--;
+    if (currentIndex < 0) currentIndex = items.length - 1;
+    updateActive(items);
+  }
+
+  else if (e.key === "Enter") {
+    e.preventDefault();
+
+    if (currentIndex >= 0 && items[currentIndex]) {
+      selectSuggestion(items[currentIndex].innerText);
+    } else {
+      sendMessage(); // normal send
+    }
+  }
+});
+
+function updateActive(items) {
+  items.forEach(item => item.classList.remove("active"));
+  if (items[currentIndex]) {
+    items[currentIndex].classList.add("active");
+  }
+}
+
+</script>
+
+</body>
+</html>

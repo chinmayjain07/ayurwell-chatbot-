@@ -304,6 +304,12 @@ function sendMessage() {
   // FAKE DELAY (simulate thinking)
   // REAL BACKEND CALL
 console.log("FETCH STARTING");
+const typingDiv = document.createElement("div");
+typingDiv.classList.add("message", "bot");
+typingDiv.innerText = "Typing...";
+chatBox.appendChild(typingDiv);
+
+console.log("FETCH STARTING");
 fetch("https://ayurwell-backendd.onrender.com/predict", {
 
   method: "POST",

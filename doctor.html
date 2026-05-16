@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>AyurWell Doctors</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+
+    body{
+      margin:0;
+      padding:30px;
+      font-family:'Poppins',sans-serif;
+      background:#f5f2eb;
+    }
+
+    h1{
+      text-align:center;
+      color:#1f5c2e;
+      margin-bottom:40px;
+      font-size:42px;
+    }
+
+    .top-bar{
+      display:flex;
+      justify-content:center;
+      margin-bottom:35px;
+    }
+
+    select{
+      padding:14px 20px;
+      border-radius:12px;
+      border:none;
+      font-size:16px;
+      background:white;
+      box-shadow:0 3px 10px rgba(0,0,0,0.08);
+      outline:none;
+    }
+
+    .container{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(330px,1fr));
+      gap:30px;
+    }
+
+    .card{
+      background:white;
+      border-radius:20px;
+      overflow:hidden;
+      box-shadow:0 6px 18px rgba(0,0,0,0.1);
+      transition:0.3s;
+    }
+
+    .card:hover{
+      transform:translateY(-6px);
+    }
+
+    .card img{
+      width:100%;
+      height:240px;
+      object-fit:cover;
+    }
+
+    .content{
+      padding:22px;
+    }
+
+    .doctor-name{
+      font-size:25px;
+      font-weight:600;
+      color:#1f5c2e;
+    }
+
+    .specialization{
+      color:#666;
+      margin-top:6px;
+      font-size:15px;
+    }
+
+    .info{
+      margin-top:16px;
+      line-height:2;
+      color:#333;
+      font-size:15px;
+    }
+
+    .rating{
+      color:#ff9800;
+      font-weight:600;
+    }
+
+    .fee{
+      margin-top:15px;
+      font-size:22px;
+      color:#1f5c2e;
+      font-weight:bold;
+    }
+
+    .buttons{
+      display:flex;
+      gap:10px;
+      margin-top:20px;
+    }
+
+    button{
+      flex:1;
+      padding:13px;
+      border:none;
+      border-radius:12px;
+      cursor:pointer;
+      font-size:15px;
+      font-weight:500;
+    }
+
+    .map-btn{
+      background:#e8f5e9;
+      color:#1f5c2e;
+    }
+
+    .book-btn{
+      background:#2e7d32;
+      color:white;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<h1>🌿 AyurWell Doctors & Clinics</h1>
+
+<div class="top-bar">
+
+<select id="filter" onchange="filterDoctors()">
+  <option value="all">All Specialists</option>
+  <option value="stress">Stress & Sleep</option>
+  <option value="digestion">Digestion</option>
+  <option value="skin">Skin & Hair</option>
+  <option value="diabetes">Diabetes</option>
+</select>
+
+</div>
+
+<div class="container" id="doctorContainer">
+
+<!-- Doctor 1 -->
+<div class="card" data-category="digestion">
+
+<img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2">
+
+<div class="content">
+
+<div class="doctor-name">
+Dr. Nilesh Jadhav
+</div>
+
+<div class="specialization">
+Ayurveda Specialist
+</div>
+
+<div class="info">
+📍 Bibvewadi, Pune <br>
+⭐ <span class="rating">99%</span> Rating <br>
+🩺 22 Years Experience
+</div>
+
+<div class="fee">
+₹200 Consultation
+</div>
+
+<div class="buttons">
+
+<a href="https://maps.google.com/?q=Bibvewadi+Pune" target="_blank">
+<button class="map-btn">
+View Clinic
+</button>
+</a>
+
+<a href="https://wa.me/919999999999" target="_blank">
+<button class="book-btn">
+Book
+</button>
+</a>
+
+</div>
+
+</div>
+</div>
+
+<!-- Doctor 2 -->
+<div class="card" data-category="stress">
+
+<img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d">
+
+<div class="content">
+
+<div class="doctor-name">
+Dr. Rajeev Nambiar
+</div>
+
+<div class="specialization">
+Stress & Wellness Expert
+</div>
+
+<div class="info">
+📍 Aundh, Pune <br>
+⭐ <span class="rating">97%</span> Rating <br>
+🩺 33 Years Experience
+</div>
+
+<div class="fee">
+₹500 Consultation
+</div>
+
+<div class="buttons">
+
+<a href="https://maps.google.com/?q=Aundh+Pune" target="_blank">
+<button class="map-btn">
+View Clinic
+</button>
+</a>
+
+<a href="https://wa.me/919999999999" target="_blank">
+<button class="book-btn">
+Book
+</button>
+</a>
+
+</div>
+
+</div>
+</div>
+
+<!-- Doctor 3 -->
+<div class="card" data-category="skin">
+
+<img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f">
+
+<div class="content">
+
+<div class="doctor-name">
+Dr. Rupal Shah
+</div>
+
+<div class="specialization">
+Skin & Hair Specialist
+</div>
+
+<div class="info">
+📍 Katraj, Pune <br>
+⭐ <span class="rating">100%</span> Rating <br>
+🩺 27 Years Experience
+</div>
+
+<div class="fee">
+₹600 Consultation
+</div>
+
+<div class="buttons">
+
+<a href="https://maps.google.com/?q=Katraj+Pune" target="_blank">
+<button class="map-btn">
+View Clinic
+</button>
+</a>
+
+<a href="https://wa.me/919999999999" target="_blank">
+<button class="book-btn">
+Book
+</button>
+</a>
+
+</div>
+
+</div>
+</div>
+
+<!-- Doctor 4 -->
+<div class="card" data-category="diabetes">
+
+<img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54">
+
+<div class="content">
+
+<div class="doctor-name">
+Dr. Syam Bhargavan
+</div>
+
+<div class="specialization">
+Diabetes & Lifestyle Expert
+</div>
+
+<div class="info">
+📍 Baner, Pune <br>
+⭐ <span class="rating">95%</span> Rating <br>
+🩺 25 Years Experience
+</div>
+
+<div class="fee">
+₹500 Consultation
+</div>
+
+<div class="buttons">
+
+<a href="https://maps.google.com/?q=Baner+Pune" target="_blank">
+<button class="map-btn">
+View Clinic
+</button>
+</a>
+
+<a href="https://wa.me/919999999999" target="_blank">
+<button class="book-btn">
+Book
+</button>
+</a>
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+function filterDoctors(){
+
+  const filter = document.getElementById("filter").value;
+
+  const cards = document.querySelectorAll(".card");
+
+  cards.forEach(card => {
+
+    if(filter === "all"){
+      card.style.display = "block";
+    }
+
+    else if(card.dataset.category === filter){
+      card.style.display = "block";
+    }
+
+    else{
+      card.style.display = "none";
+    }
+
+  });
+
+}
+
+</script>
+
+</body>
+</html>

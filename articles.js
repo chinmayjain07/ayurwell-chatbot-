@@ -1,12 +1,12 @@
 const articles = [
 
 {
-  title: "Ayurvedic Remedies for Acne",
+  title: "Ayurvedic Management of Acne Vulgaris",
   category: "Acne",
-  author: "Kerala Ayurveda",
-  description: "Natural Ayurvedic methods to reduce acne and balance skin health.",
+  author: "Upadhyay, Abhishek; Khanal, Hari; Joshi, Ram Kishor",
+  description: "This case study demonstrates the potential and usefulness of Ayurveda in the management of acne vulgaris.(facial acne)",
   image: "https://images.unsplash.com/photo-1515377905703-c4788e51af15",
-  link: "https://www.healthline.com/health/beauty-skin-care/ayurvedic-treatment-for-pimples",
+  link: "https://share.google/XV37ngobPCmJFsSFQ",
   engagement: 98
 },
 

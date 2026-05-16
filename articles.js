@@ -6,7 +6,7 @@ const articles = [
   author: "Kerala Ayurveda",
   description: "Natural Ayurvedic methods to reduce acne and balance skin health.",
   image: "https://images.unsplash.com/photo-1515377905703-c4788e51af15",
-  link: "https://www.keralaayurveda.biz/blog/ayurvedic-treatment-for-acne/",
+  link: "https://www.healthline.com/health/beauty-skin-care/ayurvedic-treatment-for-pimples",
   engagement: 98
 },
 
@@ -16,7 +16,7 @@ const articles = [
   author: "Banyan Botanicals",
   description: "Learn how Ayurvedic herbs and lifestyle changes reduce stress naturally.",
   image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773",
-  link: "https://www.banyanbotanicals.com/info/blog-the-banyan-insight/details/ayurveda-and-stress/",
+  link: "https://www.banyanbotanicals.com/blogs/wellness/ayurveda-and-stress",
   engagement: 95
 },
 
@@ -26,7 +26,7 @@ const articles = [
   author: "Organic India",
   description: "Understand digestion according to Ayurveda and improve gut health.",
   image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061",
-  link: "https://www.organicindia.com/blogs/health-wellness/ayurveda-for-digestion",
+  link: "https://www.artofliving.org/in-en/ayurveda/ayurvedic-diet-for-good-digestion",
   engagement: 93
 },
 
@@ -46,7 +46,7 @@ const articles = [
   author: "Kama Ayurveda",
   description: "Traditional Ayurvedic oils and remedies to reduce hair fall naturally.",
   image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e",
-  link: "https://www.kamaayurveda.com/blog/ayurvedic-remedies-for-hair-fall",
+  link: "https://www.kamaayurveda.com/blog/ayurvedic-remedies-for-hair-fall.html",
   engagement: 89
 }
 

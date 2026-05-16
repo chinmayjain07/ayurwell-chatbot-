@@ -280,10 +280,26 @@ input:focus {
 <script>
 function sendMessage() {
   const input = document.getElementById("userInput");
+  const sendBtn = document.querySelector("button");
+
+  sendBtn.disabled = true;
+
+  sendBtn.style.opacity = "0.6";
+
+  sendBtn.style.cursor = "not-allowed";
   const message = input.value.trim();
   const chatBox = document.getElementById("chatBox");
 
-  if (message === "") return;
+  if (message === "") {
+
+    sendBtn.disabled = false;
+
+    sendBtn.style.opacity = "1";
+
+    sendBtn.style.cursor = "pointer";
+
+    return;
+  }
 
   // USER MESSAGE
   const userMsg = document.createElement("div");
@@ -292,14 +308,6 @@ function sendMessage() {
   chatBox.appendChild(userMsg);
 
   input.value = "";
-
-  // TYPING INDICATOR
-  const typingDiv = document.createElement("div");
-  typingDiv.classList.add("typing");
-  typingDiv.innerHTML = "Consulting Ayurvedic knowledge <span>.</span><span>.</span><span>.</span>";
-  chatBox.appendChild(typingDiv);
-
-  chatBox.scrollTop = chatBox.scrollHeight;
 
   // FAKE DELAY (simulate thinking)
   // REAL BACKEND CALL
@@ -333,6 +341,12 @@ fetch("https://ayurwell-backendd.onrender.com/predict", {
 .then(res => res.json())
 
 .then(data => {
+  
+  sendBtn.disabled = false;
+
+  sendBtn.style.opacity = "1";
+
+  sendBtn.style.cursor = "pointer";
 
   typingDiv.remove();
 
@@ -340,41 +354,56 @@ fetch("https://ayurwell-backendd.onrender.com/predict", {
 
   botMsg.classList.add("message", "bot");
 
-  // FOLLOW UP QUESTION
   if (data.type === "follow_up") {
 
-    botMsg.innerText = data.question;
+  botMsg.innerText = data.question;
 
-    window.chatContext = data.context;
+  window.chatContext = data.context;
+}
 
-  }
+else if (
+  data.type === "conversation" ||
+  data.type === "clarification"
+) {
 
-  // FINAL RESPONSE
-  else {
+  botMsg.innerText = data.message;
 
-    botMsg.innerText =
+  window.chatContext = {};
+}
 
-      "🌿 " + data.message +
+else if (data.type === "final_answer") {
 
-      "\n\n📊 Confidence: " + data.confidence + "%" +
+  botMsg.innerText =
 
-      "\n\n🌿 Remedies:\n" + data.remedies +
+    "🌿 " + data.message +
 
-      "\n\n🥗 Diet:\n" + data.diet +
+    "\n\n📊 Confidence: " + (data.confidence || "N/A") + "%" +
 
-      "\n\n🧘 Lifestyle:\n" + data.lifestyle;
+    "\n\n🌿 Remedies:\n" + (data.remedies || "Not available") +
 
-    window.chatContext = {};
+    "\n\n🥗 Diet:\n" + (data.diet || "Not available") +
 
-  }
+    "\n\n🧘 Lifestyle:\n" + (data.lifestyle || "Not available");
+
+  window.chatContext = {};
+}
 
   chatBox.appendChild(botMsg);
 
-  chatBox.scrollTop = chatBox.scrollHeight;
+  chatBox.scrollTo({
+  top: chatBox.scrollHeight,
+  behavior: "smooth"
+});
 
 })
 
 .catch(error => {
+  
+  sendBtn.disabled = false;
+
+  sendBtn.style.opacity = "1";
+
+  sendBtn.style.cursor = "pointer";
 
   typingDiv.remove();
 
@@ -401,7 +430,7 @@ function changeMode() {
   else if (mode === "remedy") {
     input.placeholder = "Enter problem for remedy...";
   } 
-  else if(mode=="suggest ayurvedic lifestyle"){
+  else if(mode=="lifestyle"){
     input.placeholder = "What imbalance are you feeling?";
   }
   else {

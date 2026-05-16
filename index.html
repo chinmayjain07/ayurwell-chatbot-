@@ -336,7 +336,8 @@ typingDiv.innerHTML =
 chatBox.appendChild(typingDiv);
 
 console.log("FETCH STARTING");
-fetch("https://ayurwell-backendd.onrender.com/predict", {
+console.log(window.chatContext);
+fetch("https://ayurwell-backend.onrender.com/predict", {
 
   method: "POST",
 
@@ -348,9 +349,16 @@ fetch("https://ayurwell-backendd.onrender.com/predict", {
 
     message: message,
 
-    severity: window.chatContext?.severity || {},
+    severity: (
+      window.chatContext &&
+      window.chatContext.severity
+    )
+      ? window.chatContext.severity
+      : {},
 
-    context: window.chatContext || {}
+    context: JSON.parse(
+       JSON.stringify(window.chatContext || {})
+    )
 
   })
 

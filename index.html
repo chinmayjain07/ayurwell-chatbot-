@@ -44,6 +44,8 @@
   border-radius: 15px;
   max-width: 70%;
   font-size: 14px;
+
+  white-space: pre-wrap;
 }
     @keyframes fadeIn {
   from {
@@ -278,6 +280,19 @@ input:focus {
 </div>
 <script src="data.js"></script>
 <script>
+window.onload = () => {
+
+  const chatBox = document.getElementById("chatBox");
+
+  const welcome = document.createElement("div");
+
+  welcome.classList.add("message", "bot");
+
+  welcome.innerText =
+    "🌿 Hello! I'm AyurWell Assistant. Tell me how you're feeling today.";
+
+  chatBox.appendChild(welcome);
+};
 function sendMessage() {
   const input = document.getElementById("userInput");
   const sendBtn = document.querySelector("button");
@@ -314,7 +329,10 @@ function sendMessage() {
 console.log("FETCH STARTING");
 const typingDiv = document.createElement("div");
 typingDiv.classList.add("message", "bot");
-typingDiv.innerText = "Typing...";
+typingDiv.classList.add("typing");
+
+typingDiv.innerHTML =
+  "🌿 Consulting Ayurvedic knowledge <span>.</span><span>.</span><span>.</span>";
 chatBox.appendChild(typingDiv);
 
 console.log("FETCH STARTING");
@@ -330,7 +348,7 @@ fetch("https://ayurwell-backendd.onrender.com/predict", {
 
     message: message,
 
-    severity: {},
+    severity: window.chatContext?.severity || {},
 
     context: window.chatContext || {}
 
@@ -338,7 +356,14 @@ fetch("https://ayurwell-backendd.onrender.com/predict", {
 
 })
 
-.then(res => res.json())
+.then(async res => {
+
+  if (!res.ok) {
+    throw new Error("Backend error");
+  }
+
+  return res.json();
+})
 
 .then(data => {
   
@@ -389,6 +414,10 @@ else if (data.type === "final_answer") {
 }
 
   chatBox.appendChild(botMsg);
+  chatBox.scrollTo({
+    top: chatBox.scrollHeight,
+    behavior: "smooth"
+  });
 
   chatBox.scrollTo({
   top: chatBox.scrollHeight,
@@ -504,6 +533,10 @@ document.getElementById("userInput").addEventListener("keydown", function(e) {
 
     if (currentIndex >= 0 && items[currentIndex]) {
       selectSuggestion(items[currentIndex].innerText);
+
+    setTimeout(() => {
+      sendMessage();
+    }, 100);
     } else {
       sendMessage(); // normal send
     }

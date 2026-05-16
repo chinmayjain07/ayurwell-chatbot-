@@ -401,7 +401,8 @@ else if (
 
   botMsg.innerText = data.message;
 
-  window.chatContext = {};
+  // preserve existing context
+  window.chatContext = window.chatContext || {};
 }
 
 else if (data.type === "final_answer") {

@@ -296,10 +296,9 @@ window.onload = () => {
   chatBox.appendChild(welcome);
 };
   
-if (window.isSending) return;
-window.isSending = true;
-  
 function sendMessage() {
+  if (window.isSending) return;
+  window.isSending = true;
   const input = document.getElementById("userInput");
   const sendBtn = document.querySelector("button");
 
@@ -383,6 +382,7 @@ fetch("https://ayurwell-backend.onrender.com/predict", {
 .then(data => {
   
   sendBtn.disabled = false;
+  window.isSending = false;
 
   sendBtn.style.opacity = "1";
 

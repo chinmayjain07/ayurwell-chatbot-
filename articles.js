@@ -6,7 +6,7 @@ const articles = [
   author: "Upadhyay, Abhishek; Khanal, Hari; Joshi, Ram Kishor",
   description: "This case study demonstrates the potential and usefulness of Ayurveda in the management of acne vulgaris.(facial acne)",
   image: "https://images.unsplash.com/photo-1515377905703-c4788e51af15",
-  link: "https://share.google/XV37ngobPCmJFsSFQ",
+  link: "https://journals.lww.com/joay/fulltext/2021/15040/ayurvedic_management_of_acne_vulgaris.14.aspx",
   engagement: 98
 },
 

@@ -282,6 +282,8 @@ input:focus {
 <script>
 window.onload = () => {
 
+  window.chatContext = {};
+
   const chatBox = document.getElementById("chatBox");
 
   const welcome = document.createElement("div");
@@ -293,7 +295,10 @@ window.onload = () => {
 
   chatBox.appendChild(welcome);
 };
+  
 function sendMessage() {
+  if (window.isSending) return;
+  window.isSending = true;
   const input = document.getElementById("userInput");
   const sendBtn = document.querySelector("button");
 
@@ -308,6 +313,7 @@ function sendMessage() {
   if (message === "") {
 
     sendBtn.disabled = false;
+    window.isSending = false;
 
     sendBtn.style.opacity = "1";
 
@@ -376,6 +382,7 @@ fetch("https://ayurwell-backend.onrender.com/predict", {
 .then(data => {
   
   sendBtn.disabled = false;
+  window.isSending = false;
 
   sendBtn.style.opacity = "1";
 
@@ -394,6 +401,13 @@ fetch("https://ayurwell-backend.onrender.com/predict", {
   window.chatContext = data.context;
 }
 
+else if (data.type === "severity_followup") {
+
+  botMsg.innerText = data.question;
+
+  window.chatContext = data.context || {};
+}
+
 else if (
   data.type === "conversation" ||
   data.type === "clarification"
@@ -403,6 +417,26 @@ else if (
 
   // preserve existing context
   window.chatContext = window.chatContext || {};
+}
+
+else if (
+  data.type === "possible_conditions" ||
+  data.type === "general_remedy"
+) {
+
+  botMsg.innerText =
+
+    "🌿 " + data.message +
+
+    "\n\n📊 Confidence: " + (data.confidence || "N/A") + "%" +
+
+    "\n\n🌿 Remedies:\n" + (data.remedies || "Not available") +
+
+    "\n\n🥗 Diet:\n" + (data.diet || "Not available") +
+
+    "\n\n🧘 Lifestyle:\n" + (data.lifestyle || "Not available");
+
+  window.chatContext = {};
 }
 
 else if (data.type === "final_answer") {
@@ -423,10 +457,6 @@ else if (data.type === "final_answer") {
 }
 
   chatBox.appendChild(botMsg);
-  chatBox.scrollTo({
-    top: chatBox.scrollHeight,
-    behavior: "smooth"
-  });
 
   chatBox.scrollTo({
   top: chatBox.scrollHeight,
@@ -438,6 +468,7 @@ else if (data.type === "final_answer") {
 .catch(error => {
   
   sendBtn.disabled = false;
+  window.isSending = false;
 
   sendBtn.style.opacity = "1";
 
@@ -453,6 +484,7 @@ else if (data.type === "final_answer") {
     "⚠️ Backend connection failed.";
 
   chatBox.appendChild(botMsg);
+  input.focus();
 
   console.error(error);
 

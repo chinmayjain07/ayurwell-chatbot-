@@ -97,7 +97,7 @@ function displayArticles(filteredArticles){
   .forEach(article=>{
 
     const isBookmarked =
-      localStorage.getItem(article.title);
+bookmarkedArticles.includes(article.title);
 
     container.innerHTML += `
 
@@ -152,7 +152,7 @@ function displayArticles(filteredArticles){
 
 displayArticles(articles);
 
-ddocument.getElementById("categoryFilter")
+document.getElementById("categoryFilter")
 .addEventListener("change",()=>{
 
   const search =
@@ -185,23 +185,42 @@ ddocument.getElementById("categoryFilter")
   displayArticles(filtered);
 
 });
-function toggleBookmark(title){
 
-  if(localStorage.getItem(title)){
+document.getElementById("searchBtn")
+.addEventListener("click",()=>{
 
-    localStorage.removeItem(title);
+const search =
+document.getElementById("searchInput")
+.value
+.toLowerCase();
 
-  }
+const category =
+document.getElementById("categoryFilter")
+.value;
 
-  else{
+const filtered = articles.filter(article=>{
 
-    localStorage.setItem(title,true);
+const matchesSearch =
+article.title.toLowerCase().includes(search)
+||
+article.description.toLowerCase().includes(search)
+||
+article.category.toLowerCase().includes(search);
 
-  }
-  displayArticles(articles);
-}
+const matchesCategory =
+category === "all"
+||
+article.category === category;
 
-let bookmarkedArticles = [];
+return matchesSearch && matchesCategory;
+
+});
+
+displayArticles(filtered);
+
+});
+let bookmarkedArticles =
+JSON.parse(localStorage.getItem("bookmarks")) || [];
 
 function toggleBookmark(title){
 
@@ -216,7 +235,14 @@ bookmarkedArticles.push(title);
 
 }
 
+localStorage.setItem(
+"bookmarks",
+JSON.stringify(bookmarkedArticles)
+);
+
 updateBookmarks();
+
+displayArticles(articles);
 
 }
 
@@ -269,3 +295,5 @@ document
 .classList.toggle("hidden");
 
 });
+
+updateBookmarks();

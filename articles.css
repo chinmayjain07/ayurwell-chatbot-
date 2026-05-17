@@ -159,3 +159,47 @@ button:hover{
   background:#2e7d32;
   color:white;
 }
+
+.bookmark-section{
+position:absolute;
+top:30px;
+right:40px;
+}
+
+#bookmarkBtn{
+background:#1f5c2e;
+color:white;
+border:none;
+padding:12px 18px;
+border-radius:10px;
+cursor:pointer;
+font-size:15px;
+font-weight:600;
+}
+
+#bookmarkDropdown{
+position:absolute;
+top:55px;
+right:0;
+background:white;
+width:260px;
+border-radius:12px;
+box-shadow:0 4px 15px rgba(0,0,0,0.15);
+padding:15px;
+z-index:1000;
+}
+
+.hidden{
+display:none;
+}
+
+.bookmark-item{
+padding:10px;
+border-bottom:1px solid #ddd;
+cursor:pointer;
+font-size:14px;
+}
+
+.bookmark-item:hover{
+background:#f5f5f5;
+}

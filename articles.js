@@ -152,8 +152,8 @@ function displayArticles(filteredArticles){
 
 displayArticles(articles);
 
-document.getElementById("searchBtn")
-.addEventListener("click",()=>{
+ddocument.getElementById("categoryFilter")
+.addEventListener("change",()=>{
 
   const search =
     document.getElementById("searchInput")
@@ -185,7 +185,6 @@ document.getElementById("searchBtn")
   displayArticles(filtered);
 
 });
-
 function toggleBookmark(title){
 
   if(localStorage.getItem(title)){
@@ -199,7 +198,74 @@ function toggleBookmark(title){
     localStorage.setItem(title,true);
 
   }
-
   displayArticles(articles);
+}
+
+let bookmarkedArticles = [];
+
+function toggleBookmark(title){
+
+if(bookmarkedArticles.includes(title)){
+
+bookmarkedArticles =
+bookmarkedArticles.filter(item => item !== title);
+
+}else{
+
+bookmarkedArticles.push(title);
 
 }
+
+updateBookmarks();
+
+}
+
+function updateBookmarks(){
+
+const dropdown =
+document.getElementById("bookmarkDropdown");
+
+dropdown.innerHTML = "";
+
+if(bookmarkedArticles.length === 0){
+
+dropdown.innerHTML =
+"<p>No bookmarked articles</p>";
+
+return;
+
+}
+
+bookmarkedArticles.forEach(title => {
+
+const item =
+document.createElement("div");
+
+item.className = "bookmark-item";
+
+item.innerText = title;
+
+item.onclick = () => {
+
+const article =
+articles.find(a => a.title === title);
+
+window.open(article.link,"_blank");
+
+};
+
+dropdown.appendChild(item);
+
+});
+
+}
+
+document
+.getElementById("bookmarkBtn")
+.addEventListener("click",()=>{
+
+document
+.getElementById("bookmarkDropdown")
+.classList.toggle("hidden");
+
+});

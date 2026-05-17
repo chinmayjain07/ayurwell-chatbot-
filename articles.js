@@ -7,47 +7,80 @@ const articles = [
   description: "This case study demonstrates the potential and usefulness of Ayurveda in the management of acne vulgaris.(facial acne)",
   image: "https://images.unsplash.com/photo-1515377905703-c4788e51af15",
   link: "https://journals.lww.com/joay/fulltext/2021/15040/ayurvedic_management_of_acne_vulgaris.14.aspx2",
-  engagement: 98
 },
 
 {
-  title: "Managing Stress with Ayurveda",
+  title: "Ayurveda for Acne - 8 Ayurvedic Remedies",
+  category: "Acne",
+  author: "Sen Wellness Sanctuary - Sri Lanka",
+  description: "This article describes 8 ayurvedic remedies for acne as well as ayurvedic herbs and diet recommendation to prevent acne ",
+  image: "https://www.senwellnesssanctuary.com/wp-content/uploads/2023/10/EFV-20210822-SEN-Welness-Sanctuary-2350.jpg.webp",
+  link: "https://www.senwellnesssanctuary.com/ayurveda-for-acne",
+},
+
+{
+  title: "5 Ayurvedic Solutions for Acne & Related Skin Concerns",
+  category: "Acne",
+  author: "Apollo Pharmacy",
+  description: "Explore seven evidence-backed Ayurvedic solutions for acne, pigmentation, and clearer skin. Restore balance and radiance naturally with these gentle solutions.",
+  image: "https://images.apollo247.in/momandbaby/Adobe_Stock_1514072775_7cb476fc9a/Adobe_Stock_1514072775_7cb476fc9a.jpeg?tr=q-80,f-webp,w-800,dpr-2,c-at_max",
+  link: "https://www.apollopharmacy.in/blogs/article/ayurvedic-solutions-for-acne?srsltid=AfmBOooat6n3K8ldB9q9WMRqVzhofxrrog7u4vErszduQdxxpeqTTE5M",
+},
+
+
+{
+  title: "Ayurvedic Home Remedies For Acne",
+  category: "Acne",
+  author: "Birla Ayurveda ",
+  description: " Here are some Ayurvedic home remedies for acne that may help you to treat acne better: 1. Amla Juice: Amla juice should be consumed every day.",
+  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_ogpUVo5dN8eAYp8kXFTp-njSzwQfivU80g&s",
+  link: "https://birlaayurveda.co.in/ayurvedic-home-remedies-for-acne/?srsltid=AfmBOor8istPsfxgTYNkY4JqRBQYs4ytXaWmoDhOs96euaazZxD2JFMt",
+},
+
+{
+  title: "Top 10 Ayurvedic Remedies for Stress Relief",
   category: "Stress",
-  author: "Banyan Botanicals",
-  description: "Learn how Ayurvedic herbs and lifestyle changes reduce stress naturally.",
-  image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773",
-  link: "https://www.banyanbotanicals.com/blogs/wellness/ayurveda-and-stress",
-  engagement: 95
+  author: "Sir Ganga Ram Hospitals",
+  description: "Ashwagandha: Ashwagandha is an effective herb that has been in use in India for many years in recent times minimizing stress and anxiety. It is ..",
+  image: "https://sgrh.com/assets/img/uploads/17430614042.jpeg",
+  link: "https://sgrh.com/blog/top-10-ayurvedic-remedies-for-stress-relief-",
+},
+
+
+{
+  title: "STRESS – MANAGEMENT : LEADS FROM AYURVEDA",
+  category: "Stress",
+  author: "D Arora",
+  description: "The role of stress in the aetiology of several diseases is well recognized in Ayurvedic science and modern medicine",
+  image: "https://cdn.ncbi.nlm.nih.gov/pmc/banners/logo-ancscilife.gif",
+  link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC3330949/",
 },
 
 {
-  title: "Ayurvedic Digestion Guide",
+  title: "5 Homemade Ayurvedic Tonics That Help Calm Your Stomach ASAP",
   category: "Digestion",
-  author: "Organic India",
-  description: "Understand digestion according to Ayurveda and improve gut health.",
+  author: "Healthline",
+  description: "Indigestion, bloating, acid reflux, diarrhea, or constipation? Ayurveda says your kitchen has the answer.",
   image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061",
-  link: "https://www.artofliving.org/in-en/ayurveda/ayurvedic-diet-for-good-digestion",
-  engagement: 93
+  link: "https://www.healthline.com/health/food-nutrition/ayurvedic-tonics-stomach-disorder",
 },
 
 {
-  title: "Natural Sleep Improvement",
+  title: "Home Remedies for Sleep: Ayurvedic Ways to Beat Sleeplessness Naturally",
   category: "Sleep",
-  author: "Healthline Ayurveda",
-  description: "Ayurvedic practices and herbs for better sleep and mental calmness.",
-  image: "https://images.unsplash.com/photo-1455642305367-68834a7cbde0",
-  link: "https://www.healthline.com/health/ayurvedic-treatment-for-insomnia",
-  engagement: 91
+  author: "Nisarga Herbs",
+  description: "Discover Ayurvedic home remedies for sleep and sleeplessness. Learn natural ways to relax, reduce stress, and improve sleep quality safely.",
+  image: "https://www.nisargaherbs.com/cdn/shop/articles/Sleeplessness_0f27c68b-d8cd-4857-8f84-c980b4d4d438.jpg?v=1771916818&width=1600",
+  link: "https://www.nisargaherbs.com/blogs/all/home-remedies-for-sleep-ayurvedic-ways-to-beat-sleeplessness-naturally?srsltid=AfmBOop4WR98I30NhyD1o9OsRDElgPDo_1xCHFVgPnE9rHkrn0s7VAJK",
 },
 
 {
-  title: "Ayurvedic Hair Fall Solutions",
+  title: "Ayurvedic Treatment for Hair Fall: Causes, Tips & Home Remedies for Hairfall Prevention",
   category: "Hair Fall",
-  author: "Kama Ayurveda",
-  description: "Traditional Ayurvedic oils and remedies to reduce hair fall naturally.",
-  image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e",
-  link: "https://www.kamaayurveda.com/blog/ayurvedic-remedies-for-hair-fall.html",
-  engagement: 89
+  author: "Niramaya Ayurvedic Hospital",
+  description: "Warm herbal oils like Bhringraj, Neelibhringadi, and Brahmi are gently massaged into the scalp",
+  image: "https://niramayayurveda.com/wp-content/uploads/2025/11/best-Ayurvedic-Doctor-in-Surat.jpg",
+  link: "https://niramayayurveda.com/ayurvedic-treatment-for-hair-fall-causes-tips-home-remedies-for-hairfall-prevention/",
 }
 
 ];
@@ -97,8 +130,7 @@ function displayArticles(filteredArticles){
             📚 Category: ${article.category}
             <br><br>
 
-            🔥 Popularity Score: ${article.engagement}
-
+        
           </div>
 
           <button

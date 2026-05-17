@@ -92,8 +92,7 @@ function displayArticles(filteredArticles){
   container.innerHTML = "";
 
   filteredArticles
-  .sort((a,b)=>b.engagement-a.engagement)
-
+  
   .forEach(article=>{
 
     const isBookmarked =

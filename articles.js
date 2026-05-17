@@ -91,10 +91,7 @@ function displayArticles(filteredArticles){
 
   container.innerHTML = "";
 
-  filteredArticles
-  
-  .forEach(article=>{
-
+  filteredArticles.forEach(article=>{
     const isBookmarked =
 bookmarkedArticles.includes(article.title);
 
